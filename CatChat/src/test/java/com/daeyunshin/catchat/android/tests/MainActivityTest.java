@@ -5,12 +5,16 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.daeyunshin.catchat.android.MainActivity;
+import com.daeyunshin.catchat.android.MessageListAdapter;
 import com.daeyunshin.catchat.android.R;
+import com.daeyunshin.catchat.android.SingleMessage;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+
+import java.util.Date;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -36,5 +40,17 @@ public class MainActivityTest {
 
         EditText editMessage = (EditText) activity.findViewById(R.id.edit_message);
         assertThat(editMessage).isNotNull();
+    }
+
+    @Test
+    public void testAddToMessageListView() {
+        MessageListAdapter messageListAdapter = activity.getAdapter();
+        int itemCount = messageListAdapter.getCount();
+        assertThat(itemCount).isEqualTo(0);
+
+        messageListAdapter.add(new SingleMessage("daeyun", "+", new Date(), "supgaiz"));
+        messageListAdapter.notifyDataSetChanged();
+        itemCount = messageListAdapter.getCount();
+        assertThat(itemCount).isEqualTo(1);
     }
 }

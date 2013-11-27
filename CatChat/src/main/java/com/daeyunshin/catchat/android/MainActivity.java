@@ -48,10 +48,10 @@ public class MainActivity extends FragmentActivity {
 
         messageList = (ListView) findViewById(R.id.list);
         messageList.setAdapter(adapter);
+    }
 
-        adapter.add(new SingleMessage("daeyun", "+", new Date(), "supgaiz"));
-
-        adapter.notifyDataSetChanged();
+    public MessageListAdapter getAdapter() {
+        return adapter;
     }
 
     @Override
