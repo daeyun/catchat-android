@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CatChat/CatChat.iml" filepath="$PROJECT_DIR$/CatChat/CatChat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CatChatProject.iml" filepath="$PROJECT_DIR$/CatChatProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/catchat-android.iml" filepath="$PROJECT_DIR$/catchat-android.iml" />
     </modules>
   </component>
 </project>
