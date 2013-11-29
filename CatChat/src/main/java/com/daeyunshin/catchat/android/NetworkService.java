@@ -18,7 +18,7 @@ import static java.lang.Thread.sleep;
 /**
  * Created by daeyun on 11/22/13.
  */
-public class SocketService extends Service {
+public class NetworkService extends Service {
     private final IBinder myBinder = new LocalBinder();
     public static final String NEW_MESSAGE = "NEW_MESSAGE";
     LinkedBlockingQueue<NetworkTask> blockingQueue;
@@ -60,9 +60,9 @@ public class SocketService extends Service {
     }
 
     public class LocalBinder extends Binder {
-        SocketService getService() {
+        NetworkService getService() {
             // Return this instance of LocalService so clients can call public methods
-            return SocketService.this;
+            return NetworkService.this;
         }
     }
 

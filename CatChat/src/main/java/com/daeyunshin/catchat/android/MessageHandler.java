@@ -20,7 +20,7 @@ public class MessageHandler extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action.equalsIgnoreCase(SocketService.NEW_MESSAGE)) {
+        if (action.equalsIgnoreCase(NetworkService.NEW_MESSAGE)) {
             Bundle extra = intent.getExtras();
 
             String sender = extra.getString("sender");

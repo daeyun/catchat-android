@@ -12,28 +12,26 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
 
 public class MainActivity extends FragmentActivity {
-    ListView messageList;
-    MessageViewAdapter adapter;
-
-    private SocketService mService;
-    private Boolean mBound;
-
+    private ListView messageList;
+    private MessageViewAdapter adapter;
+    private NetworkService networkService;
+    private Boolean serviceRunning;
     private MessageHandler messageHandler;
 
     /**
      * callbacks for service binding, passed to bindService()
      */
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
-            SocketService.LocalBinder binder = (SocketService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
+            NetworkService.LocalBinder binder = (NetworkService.LocalBinder) service;
+            networkService = binder.getService();
+            serviceRunning = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
+            serviceRunning = false;
         }
     };
 
@@ -57,16 +55,16 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = new Intent(this, SocketService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        Intent intent = new Intent(this, NetworkService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
+        if (serviceRunning) {
+            unbindService(serviceConnection);
+            serviceRunning = false;
         }
     }
 
@@ -78,7 +76,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(messageHandler, new IntentFilter(SocketService.NEW_MESSAGE));
+        registerReceiver(messageHandler, new IntentFilter(NetworkService.NEW_MESSAGE));
     }
 
     @Override
@@ -87,7 +85,7 @@ public class MainActivity extends FragmentActivity {
         unregisterReceiver(messageHandler);
     }
 
-    public SocketService getSocketService() {
-        return mService;
+    public NetworkService getNetworkService() {
+        return networkService;
     }
 }
