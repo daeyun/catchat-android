@@ -2,7 +2,6 @@ package com.daeyunshin.catchat.android;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +33,14 @@ public class InputBarFragment extends Fragment {
 
     public void sendMessage() {
         EditText editText = (EditText) view.findViewById(R.id.edit_message);
-        String msg = editText.getText().toString();
+        final String msg = editText.getText().toString();
 
         if (!msg.matches("")) {
-            Log.v("CatLog", msg);
+            editText.setText("");
+
+            final MainActivity activity = (MainActivity) getActivity();
+
+//            activity.getSocketService().sendMessage(msg);
         }
     }
 }

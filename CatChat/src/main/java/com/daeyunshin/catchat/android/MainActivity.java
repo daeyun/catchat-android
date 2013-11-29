@@ -1,8 +1,10 @@
 package com.daeyunshin.catchat.android;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,6 +21,8 @@ public class MainActivity extends FragmentActivity {
 
     private SocketService mService;
     private Boolean mBound;
+
+    private newMessage messageReceiver;
 
     /**
      * callbacks for service binding, passed to bindService()
@@ -39,8 +43,6 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.v("CatLog", "Activity created");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
 
@@ -48,6 +50,8 @@ public class MainActivity extends FragmentActivity {
 
         messageList = (ListView) findViewById(R.id.list);
         messageList.setAdapter(adapter);
+
+        messageReceiver = new newMessage();
     }
 
     public MessageListAdapter getAdapter() {
@@ -73,5 +77,37 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    public class newMessage extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equalsIgnoreCase(SocketService.NEW_MESSAGE)) {
+                Bundle extra = intent.getExtras();
+
+                String sender = extra.getString("sender");
+                String message = extra.getString("message");
+
+                adapter.add(new SingleMessage(sender, "+", new Date(), message));
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(messageReceiver, new IntentFilter(SocketService.NEW_MESSAGE));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(messageReceiver);
+    }
+
+    public SocketService getSocketService() {
+        return mService;
     }
 }

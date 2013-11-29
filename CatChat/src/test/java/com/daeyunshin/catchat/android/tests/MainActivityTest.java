@@ -53,4 +53,52 @@ public class MainActivityTest {
         itemCount = messageListAdapter.getCount();
         assertThat(itemCount).isEqualTo(1);
     }
+
+    @Test
+    public void testSendButtonClearEditText() {
+        EditText editText = (EditText) activity.findViewById(R.id.edit_message);
+        editText.setText("supgaiz");
+
+        assertThat(editText.getText().toString()).isEqualTo("supgaiz");
+
+        Button sendButton = (Button) activity.findViewById(R.id.button_send);
+
+        try {
+            sendButton.performClick();
+        } catch (Exception e) {
+            // ignore all exceptions
+        }
+
+        assertThat(editText.getText().toString()).isEqualTo("");
+    }
+
+//    @Test
+//    public void testSendButton() {
+//        EditText editText = (EditText) activity.findViewById(R.id.edit_message);
+//        editText.setText("supgaiz");
+//
+//        Robolectric.addPendingHttpResponse(200, "{'requestType':'sendMessage', 'status':'OK'}");
+//
+//        Button sendButton = (Button) activity.findViewById(R.id.button_send);
+//        sendButton.performClick();
+//
+//        MessageListAdapter messageListAdapter = activity.getAdapter();
+//        int itemCount = messageListAdapter.getCount();
+//        assertThat(itemCount).isEqualTo(1);
+//    }
+//
+//    @Test
+//    public void testSendButtonError() {
+//        EditText editText = (EditText) activity.findViewById(R.id.edit_message);
+//        editText.setText("supgaiz");
+//
+//        Robolectric.addPendingHttpResponse(200, "{'requestType':'sendMessage', 'status':'ERROR'}");
+//
+//        Button sendButton = (Button) activity.findViewById(R.id.button_send);
+//        sendButton.performClick();
+//
+//        MessageListAdapter messageListAdapter = activity.getAdapter();
+//        int itemCount = messageListAdapter.getCount();
+//        assertThat(itemCount).isEqualTo(0);
+//    }
 }
