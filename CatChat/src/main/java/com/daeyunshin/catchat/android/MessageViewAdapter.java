@@ -12,10 +12,10 @@ import java.util.ArrayList;
 /**
  * Created by daeyun on 11/21/13.
  */
-public class MessageListAdapter extends ArrayAdapter<SingleMessage> {
+public class MessageViewAdapter extends ArrayAdapter<SingleMessage> {
     private Activity context;
 
-    public MessageListAdapter(Activity context) {
+    public MessageViewAdapter(Activity context) {
         super(context, R.layout.message_single, new ArrayList<SingleMessage>());
 
         this.context = context;

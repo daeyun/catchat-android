@@ -5,7 +5,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.daeyunshin.catchat.android.MainActivity;
-import com.daeyunshin.catchat.android.MessageListAdapter;
+import com.daeyunshin.catchat.android.MessageViewAdapter;
 import com.daeyunshin.catchat.android.R;
 import com.daeyunshin.catchat.android.SingleMessage;
 
@@ -44,13 +44,13 @@ public class MainActivityTest {
 
     @Test
     public void testAddToMessageListView() {
-        MessageListAdapter messageListAdapter = activity.getAdapter();
-        int itemCount = messageListAdapter.getCount();
+        MessageViewAdapter messageViewAdapter = activity.getAdapter();
+        int itemCount = messageViewAdapter.getCount();
         assertThat(itemCount).isEqualTo(0);
 
-        messageListAdapter.add(new SingleMessage("daeyun", "+", new Date(), "supgaiz"));
-        messageListAdapter.notifyDataSetChanged();
-        itemCount = messageListAdapter.getCount();
+        messageViewAdapter.add(new SingleMessage("daeyun", "+", new Date(), "supgaiz"));
+        messageViewAdapter.notifyDataSetChanged();
+        itemCount = messageViewAdapter.getCount();
         assertThat(itemCount).isEqualTo(1);
     }
 
@@ -71,34 +71,4 @@ public class MainActivityTest {
 
         assertThat(editText.getText().toString()).isEqualTo("");
     }
-
-//    @Test
-//    public void testSendButton() {
-//        EditText editText = (EditText) activity.findViewById(R.id.edit_message);
-//        editText.setText("supgaiz");
-//
-//        Robolectric.addPendingHttpResponse(200, "{'requestType':'sendMessage', 'status':'OK'}");
-//
-//        Button sendButton = (Button) activity.findViewById(R.id.button_send);
-//        sendButton.performClick();
-//
-//        MessageListAdapter messageListAdapter = activity.getAdapter();
-//        int itemCount = messageListAdapter.getCount();
-//        assertThat(itemCount).isEqualTo(1);
-//    }
-//
-//    @Test
-//    public void testSendButtonError() {
-//        EditText editText = (EditText) activity.findViewById(R.id.edit_message);
-//        editText.setText("supgaiz");
-//
-//        Robolectric.addPendingHttpResponse(200, "{'requestType':'sendMessage', 'status':'ERROR'}");
-//
-//        Button sendButton = (Button) activity.findViewById(R.id.button_send);
-//        sendButton.performClick();
-//
-//        MessageListAdapter messageListAdapter = activity.getAdapter();
-//        int itemCount = messageListAdapter.getCount();
-//        assertThat(itemCount).isEqualTo(0);
-//    }
 }
