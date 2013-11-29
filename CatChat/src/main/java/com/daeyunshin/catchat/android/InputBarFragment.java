@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Date;
+
 /**
  * Created by daeyun on 11/20/13.
  */
@@ -39,6 +41,12 @@ public class InputBarFragment extends Fragment {
 
             final MainActivity activity = (MainActivity) getActivity();
             activity.getNetworkService().sendMessage(message);
+
+            SingleMessage singleMessage = new SingleMessage("daeyun", "+", new Date(), message);
+
+            MessageViewAdapter adapter = activity.getAdapter();
+            adapter.add(singleMessage);
+            adapter.notifyDataSetChanged();
         }
     }
 }

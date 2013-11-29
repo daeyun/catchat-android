@@ -33,12 +33,12 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
-    compile fileTree(dir: '../libs/test', include: '*.jar')
 
+    testCompile fileTree(dir: '../libs/test', include: '*.jar')
     testCompile 'junit:junit:4.10'
-//    testCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
+//    testCompile 'org.robolectric:robolectric:2.+'
     testCompile 'com.squareup:fest-android:1.0.+'
     instrumentTestCompile 'junit:junit:4.10'
-//    instrumentTestCompile 'org.robolectric:robolectric:2.3-SNAPSHOT'
+//    instrumentTestCompile 'org.robolectric:robolectric:2.+'
     instrumentTestCompile 'com.squareup:fest-android:1.0.+'
 }
