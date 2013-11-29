@@ -20,7 +20,6 @@ public class InputBarFragment extends Fragment {
         this.view = view;
 
         Button sendButton = (Button) view.findViewById(R.id.button_send);
-
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,14 +32,13 @@ public class InputBarFragment extends Fragment {
 
     public void sendMessage() {
         EditText editText = (EditText) view.findViewById(R.id.edit_message);
-        final String msg = editText.getText().toString();
+        final String message = editText.getText().toString();
 
-        if (!msg.matches("")) {
+        if (!message.matches("")) {
             editText.setText("");
 
             final MainActivity activity = (MainActivity) getActivity();
-
-//            activity.getSocketService().sendMessage(msg);
+            activity.getNetworkService().sendMessage(message);
         }
     }
 }
