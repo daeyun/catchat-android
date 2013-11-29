@@ -6,6 +6,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.daeyunshin.catchat.android.helpers.IncomingMessageParser;
 import com.daeyunshin.catchat.android.networking.NetworkHandler;
 import com.daeyunshin.catchat.android.networking.NetworkTask;
 import com.daeyunshin.catchat.android.networking.NetworkTaskType;
@@ -19,9 +20,6 @@ import static java.lang.Thread.sleep;
  * Created by daeyun on 11/22/13.
  */
 public class NetworkService extends Service {
-    // Broadcast filters
-    public static final String NEW_MESSAGE = "NEW_MESSAGE";
-
     private final IBinder binder = new LocalBinder();
     private LinkedBlockingQueue<NetworkTask> taskQueue;
     private NetworkHandler networkHandler;
@@ -46,6 +44,7 @@ public class NetworkService extends Service {
             @Override
             public void onMessageReceived(String message) {
                 Log.v("LOG", message);
+                sendBroadcast(IncomingMessageParser.messageToIntent(message));
             }
         });
         networkHandler.start();

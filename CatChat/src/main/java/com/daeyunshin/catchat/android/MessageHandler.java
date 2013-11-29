@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.daeyunshin.catchat.android.helpers.IntentAction;
+
 import java.util.Date;
 
 /**
@@ -20,7 +22,7 @@ public class MessageHandler extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action.equalsIgnoreCase(NetworkService.NEW_MESSAGE)) {
+        if (action.equalsIgnoreCase(IntentAction.NEW_MESSAGE)) {
             Bundle extra = intent.getExtras();
 
             String sender = extra.getString("sender");

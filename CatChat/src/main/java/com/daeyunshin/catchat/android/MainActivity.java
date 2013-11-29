@@ -11,6 +11,8 @@ import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
 
+import com.daeyunshin.catchat.android.helpers.IntentAction;
+
 public class MainActivity extends FragmentActivity {
     private ListView messageList;
     private MessageViewAdapter adapter;
@@ -76,7 +78,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(messageHandler, new IntentFilter(NetworkService.NEW_MESSAGE));
+        registerReceiver(messageHandler, new IntentFilter(IntentAction.NEW_MESSAGE));
     }
 
     @Override
