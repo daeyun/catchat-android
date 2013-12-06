@@ -14,8 +14,6 @@ import com.daeyunshin.catchat.android.networking.SSLSocketHandler;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static java.lang.Thread.sleep;
-
 /**
  * Created by daeyun on 11/22/13.
  */
@@ -40,7 +38,7 @@ public class NetworkService extends Service {
 
         taskQueue = new LinkedBlockingQueue<NetworkTask>();
 
-        networkHandler = new NetworkHandler("192.168.1.105", 10100, taskQueue, new SSLSocketHandler.Callback() {
+        networkHandler = new NetworkHandler("192.168.1.103", 10100, taskQueue, new SSLSocketHandler.Callback() {
             @Override
             public void onMessageReceived(String message) {
                 Log.v("LOG", message);
@@ -48,12 +46,6 @@ public class NetworkService extends Service {
             }
         });
         networkHandler.start();
-
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public class LocalBinder extends Binder {
