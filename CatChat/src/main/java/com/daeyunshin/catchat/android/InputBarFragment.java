@@ -40,7 +40,7 @@ public class InputBarFragment extends Fragment {
             editText.setText("");
 
             final MainActivity activity = (MainActivity) getActivity();
-            activity.getNetworkService().sendMessage(message);
+            activity.getNetworkService().sendMessage(message, "#yychat");
 
             SingleMessage singleMessage = new SingleMessage("daeyun", "+", new Date(), message);
 

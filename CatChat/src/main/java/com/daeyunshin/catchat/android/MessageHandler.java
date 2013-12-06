@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.daeyunshin.catchat.android.helpers.IntentAction;
 
@@ -21,6 +22,7 @@ public class MessageHandler extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.v("LOG", "onReive called");
         String action = intent.getAction();
         if (action.equalsIgnoreCase(IntentAction.NEW_MESSAGE)) {
             Bundle extra = intent.getExtras();
@@ -30,6 +32,7 @@ public class MessageHandler extends BroadcastReceiver {
 
             adapter.add(new SingleMessage(sender, "+", new Date(), message));
             adapter.notifyDataSetChanged();
+            Log.v("LOG", "onReive ending here");
         }
     }
 }

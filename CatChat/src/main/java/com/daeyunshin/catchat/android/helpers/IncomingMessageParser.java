@@ -1,9 +1,9 @@
 package com.daeyunshin.catchat.android.helpers;
 
 import android.content.Intent;
+import android.util.Log;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.json.JSONObject;
 
 /**
  * Created by daeyun on 11/29/13.
@@ -12,27 +12,27 @@ public class IncomingMessageParser {
 
 
     public static Intent messageToIntent(String message) {
-        Matcher lineMatcher = Pattern.compile("([^ ]+) ([^\r\n]+)").matcher(message);
-        if (lineMatcher.matches()) {
-            String action = lineMatcher.group(1);
-            String data = lineMatcher.group(2);
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            if (jsonObject.has("hash")) {
+                Intent intent = new Intent(IntentAction.CONFIRMATION);
+                intent.putExtra("hash", (String) jsonObject.get("hash"));
+                return intent;
+            } else {
+                String type = (String) jsonObject.get("type");
 
-            if (action.equals(IntentAction.NEW_MESSAGE)) {
-                Intent intent = new Intent(IntentAction.NEW_MESSAGE);
-
-                System.out.println("DATA: " + data);
-                Matcher contentMatcher = Pattern.compile("(#[^ ]+) ([^ ]+) ([^ ]+) ([^\r\n]+)").matcher(data);
-
-                if (contentMatcher.matches()) {
-                    intent.putExtra("channel", contentMatcher.group(1));
-                    intent.putExtra("sender", contentMatcher.group(2));
-                    intent.putExtra("senderHostmask", contentMatcher.group(3));
-                    intent.putExtra("message", contentMatcher.group(4));
+                if (type.equals(IntentAction.NEW_MESSAGE)) {
+                    Intent intent = new Intent(IntentAction.NEW_MESSAGE);
+                    intent.putExtra("channel", (String) jsonObject.get("channel"));
+                    intent.putExtra("sender", (String) jsonObject.get("sender_nick"));
+                    intent.putExtra("senderHostmask", (String) jsonObject.get("sender_hostmask"));
+                    intent.putExtra("message", (String) jsonObject.get("message"));
                     return intent;
                 }
             }
+        } catch (Exception e) {
+            Log.e("LOG", Log.getStackTraceString(e));
         }
-
         return null;
     }
 }

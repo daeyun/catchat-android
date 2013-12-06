@@ -12,6 +12,8 @@ import com.daeyunshin.catchat.android.networking.NetworkTask;
 import com.daeyunshin.catchat.android.networking.NetworkTaskType;
 import com.daeyunshin.catchat.android.networking.SSLSocketHandler;
 
+import org.json.JSONObject;
+
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -55,9 +57,17 @@ public class NetworkService extends Service {
         }
     }
 
-    public void sendMessage(String message) {
-        NetworkTask task = new NetworkTask(NetworkTaskType.SEND_MESSAGE, message);
-        taskQueue.add(task);
+    public void sendMessage(String message, String target) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put("type", "send_message");
+            data.put("message", message);
+            data.put("target", target);
+
+            NetworkTask task = new NetworkTask(NetworkTaskType.SEND_MESSAGE, data);
+            taskQueue.add(task);
+        } catch (Exception e) {
+        }
     }
 
     @Override

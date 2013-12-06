@@ -33,7 +33,7 @@ public class NetworkHandler extends Thread {
                 NetworkTask task = blockingQueue.take();
                 switch (task.getType()) {
                     case SEND_MESSAGE:
-                        socketHandler.sendMessage(task.getData());
+                        socketHandler.sendMessage(task.getJSONString());
                         break;
                     case CLOSE_CONNECTION:
                         socketHandler.terminate();
